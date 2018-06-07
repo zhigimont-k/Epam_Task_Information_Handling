@@ -23,16 +23,11 @@ public class ReversePolishNotationParser {
             this.string = string;
             this.priority = priority;
         }
-
-        String getString() {
-            return string;
-        }
-
-        public static BitwiseOperation fromText(String text) {
+        public static BitwiseOperation findOperation(String text) {
             return Arrays.stream(values())
                     .filter(bl -> bl.string.equalsIgnoreCase(text))
                     .findFirst()
-                    .orElse(null);
+                    .orElse(BRACKET);
         }
 
         int getPriority(){
@@ -62,8 +57,8 @@ public class ReversePolishNotationParser {
                 }
                 operators.pop();
             } else {
-                BitwiseOperation operation = BitwiseOperation.fromText(symbol);
-                BitwiseOperation operationOnStackTop = BitwiseOperation.fromText(operators.peek());
+                BitwiseOperation operation = BitwiseOperation.findOperation(symbol);
+                BitwiseOperation operationOnStackTop = BitwiseOperation.findOperation(operators.peek());
                 while (!operators.isEmpty() && operation.getPriority() <= operationOnStackTop.getPriority()) {
                     result.append(operators.pop());
                     result.append(" ");
