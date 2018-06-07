@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="task3" verbose="2">
+    <test name="Test">
+        <classes>
+            <class name="by.epam.task3.reader.TextFileReaderTest"/>
+            <class name="by.epam.task3.interpreter.InterpreterTest"/>
+        </classes>
+    </test>
+</suite>
