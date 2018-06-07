@@ -4,6 +4,7 @@
         <classes>
             <class name="by.epam.task3.reader.TextFileReaderTest"/>
             <class name="by.epam.task3.interpreter.InterpreterTest"/>
+            <class name="by.epam.task3.interpreter.RPNParserTest"/>
         </classes>
     </test>
 </suite>
