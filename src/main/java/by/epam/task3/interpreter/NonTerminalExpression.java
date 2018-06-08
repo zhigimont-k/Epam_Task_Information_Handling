@@ -11,9 +11,4 @@ public class NonTerminalExpression implements BitwiseExpression {
     public void accept(InterpreterContext context) {
         context.push(number);
     }
-
-    @Override
-    public String toString() {
-        return String.valueOf(number);
-    }
 }

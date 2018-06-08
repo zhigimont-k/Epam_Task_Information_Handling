@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PunctuationMarkHandler implements TextComponentHandler {
-    private static final String PUNCTUATION_MARK_REGEXP = "[.,?!:;\\-()\\[\\]]";
+    protected static final String PUNCTUATION_MARK_REGEXP = "[.,?!:;\\-()\\[\\]]";
 
     @Override
     public TextComponent parse(String lexemeString) {

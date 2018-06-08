@@ -1,6 +1,5 @@
 package by.epam.task3.interpreter;
 
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,14 +22,15 @@ public class ReversePolishNotationParser {
             this.string = string;
             this.priority = priority;
         }
-        public static BitwiseOperation findOperation(String text) {
+
+        public static BitwiseOperation findOperation(String operationName) {
             return Arrays.stream(values())
-                    .filter(bl -> bl.string.equalsIgnoreCase(text))
+                    .filter(bl -> bl.string.equalsIgnoreCase(operationName))
                     .findFirst()
-                    .orElse(BRACKET);
+                    .orElse(null);
         }
 
-        int getPriority(){
+        int getPriority() {
             return priority;
         }
     }
@@ -39,55 +39,53 @@ public class ReversePolishNotationParser {
         logger.log(Level.INFO, "Parsing expression: " + expression);
         expression = replaceOperatorsWithSymbols(expression);
         StringBuilder result = new StringBuilder();
-        Deque<String> operators = new ArrayDeque<>();
+        Deque<String> operations = new ArrayDeque<>();
         int expressionLength = expression.length();
         for (int i = 0; i < expressionLength; i++) {
             String symbol = String.valueOf(expression.charAt(i));
-            if (String.valueOf(symbol).matches(NUMBER_PATTERN)) {
+            if (symbol.matches(NUMBER_PATTERN)) {
                 result.append(symbol);
-                if (i < expressionLength - 1 && !String.valueOf(expression.charAt(i+1)).matches(NUMBER_PATTERN)){
+                if (i < expressionLength - 1 && !String.valueOf(expression.charAt(i + 1)).matches(NUMBER_PATTERN)) {
                     result.append(" ");
                 }
             } else if ("(".equals(symbol)) {
-                operators.push(String.valueOf(symbol));
+                operations.push(symbol);
             } else if (")".equals(symbol)) {
-                while (!"(".equals(operators.peek())) {
-                    result.append(operators.pop());
+                while (!"(".equals(operations.peek())) {
+                    result.append(operations.pop());
                     result.append(" ");
                 }
-                operators.pop();
+                operations.pop();
             } else {
                 BitwiseOperation operation = BitwiseOperation.findOperation(symbol);
-                BitwiseOperation operationOnStackTop = BitwiseOperation.findOperation(operators.peek());
-                while (!operators.isEmpty() && operation.getPriority() <= operationOnStackTop.getPriority()) {
-                    result.append(operators.pop());
+                BitwiseOperation operationOnStackTop = BitwiseOperation.findOperation(operations.peek());
+                while (!operations.isEmpty() && operation.getPriority() <= operationOnStackTop.getPriority()) {
+                    result.append(operations.pop());
                     result.append(" ");
                 }
-                operators.push(symbol);
+                operations.push(symbol);
             }
         }
-        while (!operators.isEmpty()) {
+        while (!operations.isEmpty()) {
             result.append(" ");
-            result.append(operators.pop());
+            result.append(operations.pop());
 
         }
-        String resultingString = replaceSymbolsWithOperators(result.toString());
-        resultingString = resultingString.replaceAll("\\s+", " ");
+        String resultingString = replaceSymbolsWithOperators(result.toString())
+                .replaceAll("\\s+", " ");
         logger.log(Level.INFO, "RPN expression: " + resultingString);
         return resultingString;
     }
 
     private String replaceOperatorsWithSymbols(String expression) {
-        expression = expression.replaceAll("<<", "<");
-        expression = expression.replaceAll(">>>", "Z");
-        expression = expression.replaceAll(">>", ">");
-        return expression;
+        return expression.replaceAll("<<", "<")
+                .replaceAll(">>>", "Z")
+                .replaceAll(">>", ">");
     }
 
     private String replaceSymbolsWithOperators(String expression) {
-        expression = expression.replaceAll("<", "<<");
-        expression = expression.replaceAll(">", ">>");
-        expression = expression.replaceAll("Z", ">>>");
-        return expression;
+        return expression.replaceAll("<", "<<")
+                .replaceAll(">", ">>")
+                .replaceAll("Z", ">>>");
     }
 }
