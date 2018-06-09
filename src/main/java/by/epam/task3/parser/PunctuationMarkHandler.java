@@ -16,7 +16,7 @@ public class PunctuationMarkHandler implements TextComponentHandler {
         TextComponent lexeme = new TextComposite(TextComponent.TextPartType.LEXEME);
         while (matcher.find()) {
             char symbol = matcher.group().charAt(0);
-            Symbol symbolComponent = new Symbol(symbol);
+            Symbol symbolComponent = new Symbol(symbol, TextComponent.SymbolType.PUNCTUATION_MARK);
             lexeme.add(symbolComponent);
         }
         return lexeme;

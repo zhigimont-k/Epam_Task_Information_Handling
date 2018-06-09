@@ -3,7 +3,7 @@ package by.epam.task3.composite;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TextComposite extends TextComponent implements CharSequence {
+public class TextComposite extends TextComponent {
     private List<TextComponent> textComponents;
     private TextPartType type;
     private static final String WHITE_SPACE = " ";
@@ -33,43 +33,24 @@ public class TextComposite extends TextComponent implements CharSequence {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        //result = String.join(WHITE_SPACE, textComponents);
-        for (TextComponent textComponent : textComponents) {
-            switch (textComponent.getType()) {
-                case LETTER:
-                    result.append(textComponent.toString());
-                    break;
-                case PUNCTUATION_MARK:
-                case WORD:
-                case LEXEME:
-                case SENTENCE:
-                    result.append(textComponent.toString() + WHITE_SPACE);
-                    break;
-                case PARAGRAPH:
-                    result.append(textComponent.toString() + NEW_LINE);
-                    break;
-                default:
-                    result.append(textComponent.toString());
-                    break;
-            }
+        String result;
+        switch (type) {
+            case SYMBOL:
+                result = String.join(textComponents.toString());
+                break;
+            case WORD:
+            case LEXEME:
+            case SENTENCE:
+                result = String.join(WHITE_SPACE, textComponents.toString());
+                break;
+            case PARAGRAPH:
+                result = String.join(NEW_LINE, textComponents.toString());
+                break;
+            default:
+                result = String.join(textComponents.toString());
+                break;
         }
-        return result.toString();
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return null;
-    }
-
-    @Override
-    public char charAt(int index) {
-        return 0;
-    }
-
-    @Override
-    public int length() {
-        return 0;
+        return result;
     }
 
     @Override

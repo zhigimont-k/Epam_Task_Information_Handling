@@ -9,17 +9,14 @@ public class RPNParserTest {
     public Object[][] provideData() {
         ReversePolishNotationParser parser = new ReversePolishNotationParser();
 
-        String expression1 = "2>>3&(~1)<<5";
         String expected1 = "2 3 >> 1 ~ 5 << &";
-        String result1 = parser.parse(expression1);
+        String result1 = parser.parse("2>>3&(~1)<<5");
 
-        String expression2 = "~(128>>4)|(78&77)&90";
         String expected2 = "128 4 >> ~ 78 77 & 90 & |";
-        String result2 = parser.parse(expression2);
+        String result2 = parser.parse("~(128>>4)|(78&77)&90");
 
-        String expression3 = "88<<(288>>>4)";
         String expected3 = "88 288 4 >>> <<";
-        String result3 = parser.parse(expression3);
+        String result3 = parser.parse("88<<(288>>>4)");
 
         return new Object[][]{{result1, expected1}, {result2, expected2}, {result3, expected3}};
     }

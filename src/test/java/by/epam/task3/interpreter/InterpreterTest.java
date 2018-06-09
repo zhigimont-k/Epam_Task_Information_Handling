@@ -10,21 +10,16 @@ public class InterpreterTest {
     public Object[][] provideData(){
         InterpreterClient interpreter = new InterpreterClient();
 
-        String expression1 = "3 5 <<";
         int expected1 = 3 << 5;
-        interpreter.parse(expression1);
+        interpreter.parse("3 5 <<");
         int result1 = interpreter.calculate();
 
-
-        String expression2 = "4 ~ 5 <<";
         int expected2 = ~4 << 5;
-        interpreter.parse(expression2);
+        interpreter.parse("4 ~ 5 <<");
         int result2 = interpreter.calculate();
 
-
-        String expression3 = "128 3 >> 12 <<";
         int expected3 = 128 >> 3 << 12;
-        interpreter.parse(expression3);
+        interpreter.parse("128 3 >> 12 <<");
         int result3 = interpreter.calculate();
 
         return new Object[][]{{result1, expected1}, {result2, expected2}, {result3, expected3}};

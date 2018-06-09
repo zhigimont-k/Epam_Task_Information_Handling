@@ -26,12 +26,12 @@ public class LexemeHandler implements TextComponentHandler {
                 wordHandler.parse(lexeme);
                 sentence.add(wordComponent);
             } else if (lexeme.matches(PunctuationMarkHandler.PUNCTUATION_MARK_REGEXP)) {
-                TextComponent punctuationMarkComponent = new TextComposite(TextComponent.TextPartType.PUNCTUATION_MARK);
+                TextComponent punctuationMarkComponent = new TextComposite(TextComponent.TextPartType.SYMBOL);
                 punctuationMarkComponent.add(punctuationMarkComponent);
                 punctuationMarkHandler.parse(lexeme);
                 sentence.add(punctuationMarkComponent);
             } else {
-                TextComponent numberComponent = new TextComposite(TextComponent.TextPartType.NUMBER);
+                TextComponent numberComponent = new TextComposite(TextComponent.TextPartType.SYMBOL);
                 InterpreterClient interpreter = new InterpreterClient();
                 interpreter.parse(lexeme);
                 int expressionResult = interpreter.calculate();

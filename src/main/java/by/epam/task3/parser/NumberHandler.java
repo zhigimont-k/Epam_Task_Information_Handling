@@ -16,7 +16,7 @@ public class NumberHandler implements TextComponentHandler {
         TextComponent word = new TextComposite(TextComposite.TextPartType.WORD);
         while (matcher.find()) {
             char symbol = matcher.group().charAt(0);
-            Symbol symbolComponent = new Symbol(symbol);
+            Symbol symbolComponent = new Symbol(symbol, TextComponent.SymbolType.NUMBER);
             word.add(symbolComponent);
         }
         return word;
