@@ -2,11 +2,7 @@ package by.epam.task3.composite;
 
 public abstract class TextComponent {
     public enum TextPartType {
-        SYMBOL, LEXEME, WORD, SENTENCE, PARAGRAPH, TEXT
-    }
-
-    public enum SymbolType{
-        LETTER, PUNCTUATION_MARK, NUMBER
+        SYMBOL, LETTER, PUNCTUATION_MARK, NUMBER, WORD, LEXEME, SENTENCE, PARAGRAPH, TEXT
     }
 
     public abstract void add(TextComponent textComponent);

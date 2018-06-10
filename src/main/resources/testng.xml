@@ -2,9 +2,10 @@
 <suite name="task3" verbose="2">
     <test name="Test">
         <classes>
-            <class name="by.epam.task3.reader.TextFileReaderTest"/>
+            <!-- <class name="by.epam.task3.reader.TextFileReaderTest"/>
             <class name="by.epam.task3.interpreter.InterpreterTest"/>
-            <class name="by.epam.task3.interpreter.RPNParserTest"/>
+            <class name="by.epam.task3.interpreter.RPNParserTest"/>-->
+            <class name="by.epam.task3.parser.ParserTest"/>
         </classes>
     </test>
 </suite>

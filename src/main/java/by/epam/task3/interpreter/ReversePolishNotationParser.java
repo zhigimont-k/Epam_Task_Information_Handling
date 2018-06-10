@@ -10,7 +10,6 @@ import java.util.Deque;
 
 public class ReversePolishNotationParser {
     private static Logger logger = LogManager.getLogger();
-    private static final String NUMBER_PATTERN = "\\d+";
 
     private enum BitwiseOperation {
         BRACKET("(", 0), AND("&", 3), OR("|", 1), XOR("^", 2), L_SHIFT("<", 4), R_SHIFT(">", 4),
@@ -34,6 +33,8 @@ public class ReversePolishNotationParser {
             return priority;
         }
     }
+
+    private static final String NUMBER_PATTERN = "\\d+";
 
     public String parse(String expression) {
         logger.log(Level.INFO, "Parsing expression: " + expression);
@@ -69,7 +70,6 @@ public class ReversePolishNotationParser {
         while (!operations.isEmpty()) {
             result.append(" ");
             result.append(operations.pop());
-
         }
         String resultingString = replaceSymbolsWithOperators(result.toString())
                 .replaceAll("\\s+", " ");

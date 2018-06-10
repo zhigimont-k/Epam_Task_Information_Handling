@@ -2,12 +2,15 @@ package by.epam.task3.parser;
 
 import by.epam.task3.composite.TextComponent;
 import by.epam.task3.composite.TextComposite;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SentenceHandler implements TextComponentHandler {
-    private static final String SENTENCE_REGEXP = "^\\s*[^.!?]*[.!?]$";
+    private static final String SENTENCE_REGEXP = "\\s*[^.!?]*[.!?]";
     private LexemeHandler lexemeHandler = new LexemeHandler();
 
     @Override
@@ -17,7 +20,7 @@ public class SentenceHandler implements TextComponentHandler {
         while (matcher.find()){
             String sentence = matcher.group();
             TextComponent sentenceComponent = new TextComposite(TextComponent.TextPartType.SENTENCE);
-            lexemeHandler.parse(sentence);
+            sentenceComponent = lexemeHandler.parse(sentence.trim());
             paragraph.add(sentenceComponent);
         }
         return paragraph;

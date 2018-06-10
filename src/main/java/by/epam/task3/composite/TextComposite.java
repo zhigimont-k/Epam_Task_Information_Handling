@@ -1,9 +1,16 @@
 package by.epam.task3.composite;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class TextComposite extends TextComponent {
+    private static Logger logger = LogManager.getLogger();
     private List<TextComponent> textComponents;
     private TextPartType type;
     private static final String WHITE_SPACE = " ";
@@ -33,24 +40,19 @@ public class TextComposite extends TextComponent {
 
     @Override
     public String toString() {
-        String result;
-        switch (type) {
-            case SYMBOL:
-                result = String.join(textComponents.toString());
-                break;
-            case WORD:
-            case LEXEME:
-            case SENTENCE:
-                result = String.join(WHITE_SPACE, textComponents.toString());
-                break;
-            case PARAGRAPH:
-                result = String.join(NEW_LINE, textComponents.toString());
-                break;
-            default:
-                result = String.join(textComponents.toString());
-                break;
+        StringBuilder result = new StringBuilder();
+        for (TextComponent component : textComponents) {
+            if (component.getType().equals(TextPartType.WORD) || "-".equals(component.toString())) {
+                result.append(WHITE_SPACE);
+                result.append(component);
+            } else if (component.getType().equals(TextPartType.PARAGRAPH)) {
+                result.append(component);
+                result.append(NEW_LINE);
+            } else {
+                result.append(component);
+            }
         }
-        return result;
+        return result.toString();
     }
 
     @Override

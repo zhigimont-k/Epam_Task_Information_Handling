@@ -2,12 +2,12 @@ package by.epam.task3.composite;
 
 public class Symbol extends TextComponent {
     private char character;
-    private SymbolType type;
+    private TextPartType type;
 
     private Symbol() {
     }
 
-    public Symbol(char character, SymbolType type) {
+    public Symbol(char character, TextPartType type) {
         this.character = character;
         this.type = type;
     }
@@ -26,10 +26,6 @@ public class Symbol extends TextComponent {
 
     @Override
     public TextPartType getType() {
-        return TextPartType.SYMBOL;
-    }
-
-    public SymbolType getSymbolType(){
         return type;
     }
 
