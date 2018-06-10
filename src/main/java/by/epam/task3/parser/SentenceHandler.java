@@ -2,9 +2,6 @@ package by.epam.task3.parser;
 
 import by.epam.task3.composite.TextComponent;
 import by.epam.task3.composite.TextComposite;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,11 +13,10 @@ public class SentenceHandler implements TextComponentHandler {
     @Override
     public TextComponent parse(String paragraphString) {
         Matcher matcher = Pattern.compile(SENTENCE_REGEXP).matcher(paragraphString);
-        TextComponent paragraph = new TextComposite(TextComponent.TextPartType.PARAGRAPH);
+        TextComponent paragraph = new TextComposite();
         while (matcher.find()){
             String sentence = matcher.group();
-            TextComponent sentenceComponent = new TextComposite(TextComponent.TextPartType.SENTENCE);
-            sentenceComponent = lexemeHandler.parse(sentence.trim());
+            TextComponent sentenceComponent = lexemeHandler.parse(sentence.trim());
             paragraph.add(sentenceComponent);
         }
         return paragraph;

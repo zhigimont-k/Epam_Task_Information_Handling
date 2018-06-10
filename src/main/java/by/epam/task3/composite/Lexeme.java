@@ -1,15 +1,13 @@
 package by.epam.task3.composite;
 
-public class Symbol extends TextComponent {
-    private char character;
-    private TextPartType type;
+public class Lexeme extends TextComponent {
+    private String string;
 
-    private Symbol() {
+    private Lexeme() {
     }
 
-    public Symbol(char character, TextPartType type) {
-        this.character = character;
-        this.type = type;
+    public Lexeme(String string) {
+        this.string = string;
     }
 
     public void add(TextComponent textComponent) {
@@ -25,13 +23,8 @@ public class Symbol extends TextComponent {
     }
 
     @Override
-    public TextPartType getType() {
-        return type;
-    }
-
-    @Override
     public String toString() {
-        return String.valueOf(character);
+        return string;
     }
 
     @Override
@@ -42,14 +35,14 @@ public class Symbol extends TextComponent {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Symbol symbol1 = (Symbol) o;
-        return character == symbol1.character;
+        Lexeme lexeme1 = (Lexeme) o;
+        return string.equals(lexeme1.string);
     }
 
     @Override
     public int hashCode() {
         int hash = 1;
-        hash += hash * 31 + character;
+        hash += hash * 31 + string.hashCode();
         return hash;
     }
 }

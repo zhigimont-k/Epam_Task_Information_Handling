@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 public class ParserTest {
     private static final String FILE_PATH = "data/text.txt";
+    private static final String EXPECTED_FILE_PATH = "data/result.txt";
     private TextFileReader reader;
     private TextHandler handler;
 
@@ -21,8 +22,9 @@ public class ParserTest {
     @Test
     public void parse() throws IllegalFileInputException{
         String text = reader.readFile(FILE_PATH);
+        String expected = reader.readFile(EXPECTED_FILE_PATH);
         TextComponent textComponent = handler.parse(text);
         String restoredText = textComponent.toString();
-        Assert.assertEquals(restoredText, text);
+        Assert.assertEquals(restoredText, expected);
     }
 }

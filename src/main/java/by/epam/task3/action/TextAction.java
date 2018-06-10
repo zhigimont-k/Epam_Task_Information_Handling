@@ -8,10 +8,6 @@ public class TextAction {
         return null;
     }
 
-    public TextComponent sortSentencesByWordLength(){
-        return null;
-    }
-
     public TextComponent sortSentencesByLexemeLength(){
         return null;
     }

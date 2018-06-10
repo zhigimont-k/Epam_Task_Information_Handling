@@ -1,24 +1,15 @@
 package by.epam.task3.composite;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class TextComposite extends TextComponent {
-    private static Logger logger = LogManager.getLogger();
     private List<TextComponent> textComponents;
-    private TextPartType type;
     private static final String WHITE_SPACE = " ";
-    private static final String NEW_LINE = "\n";
 
-    public TextComposite(TextPartType type) {
+    public TextComposite() {
         textComponents = new LinkedList<>();
-        this.type = type;
     }
 
     public void add(TextComponent textComponent) {
@@ -34,25 +25,13 @@ public class TextComposite extends TextComponent {
     }
 
     @Override
-    public TextPartType getType() {
-        return type;
-    }
-
-    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (TextComponent component : textComponents) {
-            if (component.getType().equals(TextPartType.WORD) || "-".equals(component.toString())) {
-                result.append(WHITE_SPACE);
-                result.append(component);
-            } else if (component.getType().equals(TextPartType.PARAGRAPH)) {
-                result.append(component);
-                result.append(NEW_LINE);
-            } else {
-                result.append(component);
-            }
+        for (TextComponent component : textComponents){
+            result.append(component);
+            result.append(WHITE_SPACE);
         }
-        return result.toString();
+        return result.toString().trim();
     }
 
     @Override

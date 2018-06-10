@@ -9,8 +9,6 @@ public class InterpreterClient {
     private InterpreterContext context = new InterpreterContext();
 
     public void parse(String expression) {
-        ReversePolishNotationParser parser = new ReversePolishNotationParser();
-        expression = parser.parse(expression);
         for (String s : expression.split(EXPRESSION_SPLITTER)) {
             if (s.isEmpty()) {
                 continue;
