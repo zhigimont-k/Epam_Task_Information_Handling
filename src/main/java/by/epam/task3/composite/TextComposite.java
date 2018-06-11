@@ -1,5 +1,6 @@
 package by.epam.task3.composite;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +23,10 @@ public class TextComposite extends TextComponent {
 
     public void remove(TextComponent textComponent) {
         textComponents.remove(textComponent);
+    }
+
+    public List<TextComponent> getComponents(){
+        return Collections.unmodifiableList(textComponents);
     }
 
     @Override

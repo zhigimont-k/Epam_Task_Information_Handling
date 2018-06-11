@@ -22,11 +22,14 @@ public class ReversePolishNotationParser {
             this.priority = priority;
         }
 
-        public static BitwiseOperation findOperation(String operationName) {
-            return Arrays.stream(values())
-                    .filter(bl -> bl.string.equalsIgnoreCase(operationName))
-                    .findFirst()
-                    .orElse(null);
+        public static BitwiseOperation findOperation(String operationName){
+            BitwiseOperation found = BRACKET;
+            for (BitwiseOperation operation : values()){
+                if (operation.string.equals(operationName)){
+                    found = operation;
+                }
+            }
+            return found;
         }
 
         int getPriority() {

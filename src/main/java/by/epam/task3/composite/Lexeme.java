@@ -1,5 +1,7 @@
 package by.epam.task3.composite;
 
+import java.util.List;
+
 public class Lexeme extends TextComponent {
     private String string;
 
@@ -19,6 +21,11 @@ public class Lexeme extends TextComponent {
     }
 
     public void remove(TextComponent textComponent) {
+        throw new UnsupportedOperationException("Can't perform operations on the leaf");
+    }
+
+    @Override
+    public List<TextComponent> getComponents() {
         throw new UnsupportedOperationException("Can't perform operations on the leaf");
     }
 
