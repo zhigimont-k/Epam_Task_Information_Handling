@@ -15,7 +15,7 @@ public class LexemeHandler implements TextComponentHandler {
 
     @Override
     public TextComponent parse(String sentenceString) {
-        TextComponent sentence = new TextComposite();
+        TextComponent sentence = new TextComposite(TextComponent.TextComponentType.SENTENCE);
         List<String> lexemes = Arrays.asList(sentenceString.split(LEXEME_DELIMITER));
         for (String lexeme : lexemes) {
             if (lexeme.matches(BITWISE_EXPRESSION_REGEXP)) {

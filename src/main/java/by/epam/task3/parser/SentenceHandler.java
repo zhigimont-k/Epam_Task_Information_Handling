@@ -13,7 +13,7 @@ public class SentenceHandler implements TextComponentHandler {
     @Override
     public TextComponent parse(String paragraphString) {
         Matcher matcher = Pattern.compile(SENTENCE_REGEXP).matcher(paragraphString);
-        TextComponent paragraph = new TextComposite();
+        TextComponent paragraph = new TextComposite(TextComponent.TextComponentType.PARAGRAPH);
         while (matcher.find()){
             String sentence = matcher.group();
             TextComponent sentenceComponent = lexemeHandler.parse(sentence.trim());

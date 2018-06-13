@@ -2,7 +2,7 @@ package by.epam.task3.composite;
 
 import java.util.List;
 
-public class Lexeme extends TextComponent {
+public class Lexeme implements TextComponent {
     private String string;
 
     private Lexeme() {
@@ -25,8 +25,13 @@ public class Lexeme extends TextComponent {
     }
 
     @Override
-    public List<TextComponent> getComponents() {
+    public List<TextComponent> getComponentList() {
         throw new UnsupportedOperationException("Can't perform operations on the leaf");
+    }
+
+    @Override
+    public TextComponentType getType() {
+        return TextComponentType.LEXEME;
     }
 
     @Override

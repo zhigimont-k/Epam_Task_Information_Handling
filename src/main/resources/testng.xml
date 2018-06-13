@@ -6,6 +6,7 @@
             <class name="by.epam.task3.interpreter.InterpreterTest"/>
             <class name="by.epam.task3.interpreter.RPNParserTest"/>
             <class name="by.epam.task3.parser.ParserTest"/>
+            <class name="by.epam.task3.action.ActionTest"/>
         </classes>
     </test>
 </suite>

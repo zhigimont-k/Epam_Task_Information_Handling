@@ -5,36 +5,45 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class TextComposite extends TextComponent {
-    private List<TextComponent> textComponents;
-    private static final String WHITE_SPACE = " ";
+public class TextComposite implements TextComponent {
+    private List<TextComponent> componentList = new LinkedList<>();
+    private TextComponentType type;
 
-    public TextComposite() {
-        textComponents = new LinkedList<>();
+    public TextComposite(TextComponentType type) {
+        this.type = type;
     }
 
     public void add(TextComponent textComponent) {
-        textComponents.add(textComponent);
+        componentList.add(textComponent);
     }
 
     public Object getChild(int index) {
-        return textComponents.get(index);
+        return componentList.get(index);
     }
 
     public void remove(TextComponent textComponent) {
-        textComponents.remove(textComponent);
+        componentList.remove(textComponent);
     }
 
-    public List<TextComponent> getComponents(){
-        return Collections.unmodifiableList(textComponents);
+    @Override
+    public TextComponentType getType() {
+        return type;
+    }
+
+    public List<TextComponent> getComponentList(){
+        return Collections.unmodifiableList(componentList);
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (TextComponent component : textComponents){
+        for (TextComponent component : componentList){
             result.append(component);
-            result.append(WHITE_SPACE);
+            if (component.getType() == TextComponentType.PARAGRAPH){
+                result.append("\n");
+            } else {
+                result.append(" ");
+            }
         }
         return result.toString().trim();
     }
@@ -48,12 +57,12 @@ public class TextComposite extends TextComponent {
             return false;
         }
         TextComposite textComposite = (TextComposite) o;
-        int size = textComponents.size();
-        if (size != textComposite.textComponents.size()) {
+        int size = componentList.size();
+        if (size != textComposite.componentList.size()) {
             return false;
         }
         for (int i = 0; i < size; i++) {
-            if (!textComponents.get(i).equals(textComposite.textComponents.get(i))) {
+            if (!componentList.get(i).equals(textComposite.componentList.get(i))) {
                 return false;
             }
         }
@@ -63,7 +72,7 @@ public class TextComposite extends TextComponent {
     @Override
     public int hashCode() {
         int hash = 1;
-        for (TextComponent textComponent : textComponents) {
+        for (TextComponent textComponent : componentList) {
             hash += hash * 31 + textComponent.hashCode();
         }
         return hash;

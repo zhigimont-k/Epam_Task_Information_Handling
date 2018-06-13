@@ -13,7 +13,7 @@ public class ParagraphHandler implements TextComponentHandler {
     @Override
     public TextComponent parse(String textString) {
         Matcher matcher = Pattern.compile(PARAGRAPH_REGEXP, Pattern.MULTILINE).matcher(textString);
-        TextComponent text = new TextComposite();
+        TextComponent text = new TextComposite(TextComponent.TextComponentType.TEXT);
         while (matcher.find()){
             String paragraph = matcher.group();
             TextComponent paragraphComponent = sentenceHandler.parse(paragraph.trim());

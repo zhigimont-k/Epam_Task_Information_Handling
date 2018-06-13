@@ -9,11 +9,12 @@ import java.util.List;
 
 public class TextAction {
 
-    public TextComponent sortParagraphsBySentenceLength(TextComponent text) {
-        List<TextComponent> paragraphList = text.getComponents();
-        paragraphList.sort((o1, o2) ->
-                o1.getComponents().size() - o2.getComponents().size());
-        TextComponent sortedText = new TextComposite();
+    public TextComponent sortParagraphsBySentenceNumber(TextComponent text) {
+        List<TextComponent> paragraphList = findAllParagraphs(text);
+        paragraphList.sort(
+                Comparator.<TextComponent>comparingInt(o -> o.getComponentList().size())
+                        .thenComparing((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.toString(), o2.toString())));
+        TextComponent sortedText = new TextComposite(TextComponent.TextComponentType.TEXT);
         for (TextComponent paragraph : paragraphList) {
             sortedText.add(paragraph);
         }
@@ -22,9 +23,9 @@ public class TextAction {
 
     public TextComponent sortSentencesByLexemeLength(TextComponent text) {
         List<TextComponent> sentenceList = findAllSentences(text);
-        sentenceList.sort((o1, o2) ->
-                o1.getComponents().size() - o2.getComponents().size());
-        TextComponent sortedText = new TextComposite();
+        sentenceList.sort(Comparator.<TextComponent>comparingInt(o -> o.getComponentList().size())
+                .thenComparing((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.toString(), o2.toString())));
+        TextComponent sortedText = new TextComposite(TextComponent.TextComponentType.TEXT);
         for (TextComponent sentence : sentenceList) {
             sortedText.add(sentence);
         }
@@ -33,20 +34,27 @@ public class TextAction {
 
     public TextComponent sortLexemesBySymbolOccurrence(char symbol, TextComponent text) {
         List<TextComponent> lexemeList = findAllLexemes(text);
-        lexemeList.sort((o1, o2) ->
-                (int) o1.toString().chars().filter(ch -> ch == symbol).count() -
-                        (int) o2.toString().chars().filter(ch -> ch == symbol).count());
-        TextComponent sortedText = new TextComposite();
+        lexemeList.sort(Comparator.<TextComponent>comparingInt(o -> countCharOccurrence(symbol, o.toString())).reversed()
+                .thenComparing((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.toString(), o2.toString())));
+        TextComponent sortedText = new TextComposite(TextComponent.TextComponentType.TEXT);
         for (TextComponent lexeme : lexemeList) {
             sortedText.add(lexeme);
         }
         return sortedText;
     }
 
+    private List<TextComponent> findAllParagraphs(TextComponent text) {
+        List<TextComponent> result = new ArrayList<>();
+        for (TextComponent paragraph : text.getComponentList()) {
+            result.add(paragraph);
+        }
+        return result;
+    }
+
     private List<TextComponent> findAllSentences(TextComponent text) {
         List<TextComponent> result = new ArrayList<>();
-        for (TextComponent paragraph : text.getComponents()) {
-            for (TextComponent sentence : paragraph.getComponents()) {
+        for (TextComponent paragraph : text.getComponentList()) {
+            for (TextComponent sentence : paragraph.getComponentList()) {
                 result.add(sentence);
             }
         }
@@ -55,13 +63,23 @@ public class TextAction {
 
     private List<TextComponent> findAllLexemes(TextComponent text) {
         List<TextComponent> result = new ArrayList<>();
-        for (TextComponent paragraph : text.getComponents()) {
-            for (TextComponent sentence : paragraph.getComponents()) {
-                for (TextComponent lexeme : sentence.getComponents()) {
+        for (TextComponent paragraph : text.getComponentList()) {
+            for (TextComponent sentence : paragraph.getComponentList()) {
+                for (TextComponent lexeme : sentence.getComponentList()) {
                     result.add(lexeme);
                 }
             }
         }
         return result;
+    }
+
+    private int countCharOccurrence(char character, String string) {
+        int counter = 0;
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) == character) {
+                counter++;
+            }
+        }
+        return counter;
     }
 }

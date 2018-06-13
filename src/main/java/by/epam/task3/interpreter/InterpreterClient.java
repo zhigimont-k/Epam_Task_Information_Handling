@@ -15,18 +15,27 @@ public class InterpreterClient {
             }
             switch (s) {
                 case "&":
-                    expressions.add(newContext ->
-                            context.push(context.pop() & context.pop())
+                    expressions.add(newContext -> {
+                                int arg2 = context.pop();
+                                int arg1 = context.pop();
+                                context.push(arg1 & arg2);
+                            }
                     );
                     break;
                 case "|":
-                    expressions.add(newContext ->
-                            context.push(context.pop() | context.pop())
+                    expressions.add(newContext -> {
+                                int arg2 = context.pop();
+                                int arg1 = context.pop();
+                                context.push(arg1 | arg2);
+                            }
                     );
                     break;
                 case "^":
-                    expressions.add(newContext ->
-                            context.push(context.pop() ^ context.pop())
+                    expressions.add(newContext -> {
+                                int arg2 = context.pop();
+                                int arg1 = context.pop();
+                                context.push(arg1 ^ arg2);
+                            }
                     );
                     break;
                 case "<<":
