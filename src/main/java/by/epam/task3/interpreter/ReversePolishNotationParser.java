@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 
 public class ReversePolishNotationParser {
@@ -12,7 +13,7 @@ public class ReversePolishNotationParser {
 
     private enum BitwiseOperation {
         BRACKET("(", 0), AND("&", 3), OR("|", 1), XOR("^", 2), L_SHIFT("<", 4), R_SHIFT(">", 4),
-        ZERO_R_SHIFT("Z", 4), NOT("~", 5);
+        ZERO_R_SHIFT("Z", 4), NOT("~", 5), UNKNOWN_OPERATION("", 0);
         private String string;
         private int priority;
 
@@ -21,14 +22,11 @@ public class ReversePolishNotationParser {
             this.priority = priority;
         }
 
-        public static BitwiseOperation findOperation(String operationName){
-            BitwiseOperation found = BRACKET;
-            for (BitwiseOperation operation : values()){
-                if (operation.string.equals(operationName)){
-                    found = operation;
-                }
-            }
-            return found;
+        static BitwiseOperation findOperation(String operationName) {
+            return Arrays.stream(values())
+                    .filter(operation -> operation.string.equalsIgnoreCase(operationName))
+                    .findFirst()
+                    .orElse(UNKNOWN_OPERATION);
         }
 
         int getPriority() {

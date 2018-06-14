@@ -16,8 +16,8 @@ public class LexemeHandler implements TextComponentHandler {
     @Override
     public TextComponent parse(String sentenceString) {
         TextComponent sentence = new TextComposite(TextComponent.TextComponentType.SENTENCE);
-        List<String> lexemes = Arrays.asList(sentenceString.split(LEXEME_DELIMITER));
-        for (String lexeme : lexemes) {
+        List<String> lexemeList = Arrays.asList(sentenceString.split(LEXEME_DELIMITER));
+        for (String lexeme : lexemeList) {
             if (lexeme.matches(BITWISE_EXPRESSION_REGEXP)) {
                 InterpreterClient interpreter = new InterpreterClient();
                 interpreter.parse(new ReversePolishNotationParser().parse(lexeme));

@@ -1,11 +1,11 @@
 package by.epam.task3.interpreter;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InterpreterClient {
     private static final String EXPRESSION_SPLITTER = "\\p{Blank}+";
-    private List<BitwiseExpression> expressions = new ArrayList<>();
+    private List<BitwiseExpression> expressionList = new LinkedList<>();
     private InterpreterContext context = new InterpreterContext();
 
     public void parse(String expression) {
@@ -15,7 +15,7 @@ public class InterpreterClient {
             }
             switch (s) {
                 case "&":
-                    expressions.add(newContext -> {
+                    expressionList.add(newContext -> {
                                 int arg2 = context.pop();
                                 int arg1 = context.pop();
                                 context.push(arg1 & arg2);
@@ -23,7 +23,7 @@ public class InterpreterClient {
                     );
                     break;
                 case "|":
-                    expressions.add(newContext -> {
+                    expressionList.add(newContext -> {
                                 int arg2 = context.pop();
                                 int arg1 = context.pop();
                                 context.push(arg1 | arg2);
@@ -31,7 +31,7 @@ public class InterpreterClient {
                     );
                     break;
                 case "^":
-                    expressions.add(newContext -> {
+                    expressionList.add(newContext -> {
                                 int arg2 = context.pop();
                                 int arg1 = context.pop();
                                 context.push(arg1 ^ arg2);
@@ -39,7 +39,7 @@ public class InterpreterClient {
                     );
                     break;
                 case "<<":
-                    expressions.add(newContext -> {
+                    expressionList.add(newContext -> {
                                 int arg2 = context.pop();
                                 int arg1 = context.pop();
                                 context.push(arg1 << arg2);
@@ -47,7 +47,7 @@ public class InterpreterClient {
                     );
                     break;
                 case ">>":
-                    expressions.add(newContext -> {
+                    expressionList.add(newContext -> {
                                 int arg2 = context.pop();
                                 int arg1 = context.pop();
                                 context.push(arg1 >> arg2);
@@ -55,7 +55,7 @@ public class InterpreterClient {
                     );
                     break;
                 case ">>>":
-                    expressions.add(newContext -> {
+                    expressionList.add(newContext -> {
                                 int arg2 = context.pop();
                                 int arg1 = context.pop();
                                 context.push(arg1 >>> arg2);
@@ -63,18 +63,18 @@ public class InterpreterClient {
                     );
                     break;
                 case "~":
-                    expressions.add(newContext ->
+                    expressionList.add(newContext ->
                             context.push(~(context.pop()))
                     );
                     break;
                 default:
-                    expressions.add(new NonTerminalExpression(Integer.parseInt(s)));
+                    expressionList.add(new NonTerminalExpression(Integer.parseInt(s)));
             }
         }
     }
 
     public int calculate() {
-        for (BitwiseExpression expression : expressions) {
+        for (BitwiseExpression expression : expressionList) {
             expression.accept(context);
         }
         return context.pop();

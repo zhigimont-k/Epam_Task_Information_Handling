@@ -11,9 +11,8 @@ public class TextAction {
 
     public TextComponent sortParagraphsBySentenceNumber(TextComponent text) {
         List<TextComponent> paragraphList = findAllParagraphs(text);
-        paragraphList.sort(
-                Comparator.<TextComponent>comparingInt(o -> o.getComponentList().size())
-                        .thenComparing((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.toString(), o2.toString())));
+        paragraphList.sort(Comparator.<TextComponent>comparingInt(o -> o.getComponentList().size())
+                .thenComparing((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.toString(), o2.toString())));
         TextComponent sortedText = new TextComposite(TextComponent.TextComponentType.TEXT);
         for (TextComponent paragraph : paragraphList) {
             sortedText.add(paragraph);
